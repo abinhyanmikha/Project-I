@@ -1,0 +1,61 @@
+Complete project workflow
+
+Step 1 — Collect the dataset
+Start here
+Download vgsales.csv and put it in your project's data/ folder.
+
+
+
+
+Step 2 — Explore the data
+
+Create data_exploration.ipynb or data_cleaning.py. Check column names, data types, missing values, duplicates, and sales distributions.
+
+
+
+
+Step 3 — Clean the dataset
+
+Remove genuine duplicate records, handle missing values, check invalid values, and save the cleaned data as cleaned_vgsales.csv.
+
+
+
+
+Step 4 — Perform data analysis (EDA)
+
+Visualize sales by genre, platform, publisher, and year. Look for skewed distributions and useful patterns.
+
+
+
+
+Step 5 — Train the ML model
+
+Split the data into training and testing sets. Train a regression model such as Random Forest.
+
+
+
+
+Step 6 — Evaluate the model
+
+Measure MAE, RMSE, and R². Compare against a simple baseline and improve the model if necessary.
+
+
+
+
+Step 7 — Save the trained model
+
+Save the complete preprocessing and prediction pipeline as model.pkl using joblib.
+
+
+
+
+Step 8 — Build app.py
+
+Create the Streamlit website, load model.pkl, accept game details, and display predicted global sales.
+
+
+
+
+Step 9 — Test and deploy
+
+Test predictions, check the website, and publish it online if desired.
