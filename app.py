@@ -66,7 +66,8 @@ elif page == "Prediction":
 
         st.success(f"Example result: {result}")
 
-# About page
+# About page 
+
 elif page == "About":
     st.header("About This Project")
     st.write(
