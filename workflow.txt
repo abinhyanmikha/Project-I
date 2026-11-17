@@ -89,7 +89,7 @@ STEP 6 — Preprocessing for modeling
       OneHotEncoder(handle_unknown="ignore", min_frequency=10,
                     sparse_output=False)
 - Final design matrix: numeric columns + encoded columns
-  = 4,105 training rows / 3,284 test rows x 427 features, no missing values.
+  = 13,135 training rows / 3,284 test rows x 380 features, no missing values.
 
 STEP 7 — Train and compare models
 ---------------------------------
@@ -114,9 +114,9 @@ STEP 8 — Hyperparameter tuning
 STEP 9 — Evaluate the tuned model
 ---------------------------------
 - Final tuned XGBoost performance on the 3,284-row test set:
-      MAE  = 0.4142
-      RMSE = 1.6326
-      R2   = 0.3706
+      MAE  = 0.4141
+      RMSE = 1.6102
+      R2   = 0.3877
 - Inspect permutation feature importance to confirm sensible drivers.
 
 STEP 10 — Save the pipeline artifacts
@@ -132,7 +132,8 @@ STEP 11 — Build the Streamlit app (app.py)
 - Loads the four artifacts above and recomputes predictions/metrics on start.
 - Reindexes the test features to the model's stored column order:
       X_test.reindex(columns=model.feature_names_in_, fill_value=0)
-- Four pages via sidebar navigation:
+- Five pages via sidebar navigation:
+    * Workflow          — the project's main steps
     * Dashboard         — headline metrics + Global_Sales distribution
     * Dataset           — cleaned dataset with column search + download
     * Model Performance — MAE / RMSE / R2 + actual-vs-predicted scatter
