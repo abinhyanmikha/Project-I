@@ -5,9 +5,7 @@ import joblib
 import matplotlib.pyplot as plt
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
-# ---------------------------------------------------------
-# Page setup
-# ---------------------------------------------------------
+#page setup
 st.set_page_config(
     page_title="Video Game Global Sales Predictor",
     page_icon="🎮",
@@ -20,10 +18,7 @@ st.write(
     "the tuned XGBoost regression model."
 )
 
-# ---------------------------------------------------------
-# Load project files
-# Keep these files in the same folder as app.py
-# ---------------------------------------------------------
+#loading files
 @st.cache_data
 def load_dataset():
     return pd.read_csv("video_game_sales_cleaned.csv")
@@ -38,14 +33,14 @@ def load_test_target():
 
 @st.cache_resource
 def load_model():
-    return joblib.load("best_xgboost_model.pkl")
+    return joblib.load("xgboost_model.pkl")
 
 
 required_files = [
     "video_game_sales_cleaned.csv",
     "X_test_processed.csv",
     "y_test.csv",
-    "best_xgboost_model.pkl",
+    'best_xgboost_model.pkl',
 ]
 
 missing_files = [filename for filename in required_files if not __import__("os").path.exists(filename)]
@@ -97,60 +92,13 @@ except Exception as error:
     )
     st.stop()
 
-# ---------------------------------------------------------
-# Sidebar navigation
-# ---------------------------------------------------------
+#sidebar nav
 page = st.sidebar.radio(
     "Navigation",
-    ["Workflow", "Dashboard", "Dataset", "Model Performance", "Predictions"]
+    ["Dashboard", "Dataset", "Model Performance", "Predictions"]
 )
-
-# ---------------------------------------------------------
-# Workflow
-# ---------------------------------------------------------
-if page == "Workflow":
-    st.header("Project Workflow")
-    st.write(
-        "The main steps used to build this project, from the raw dataset "
-        "to the deployed Streamlit app."
-    )
-
-    workflow_steps = [
-        ("Collect the dataset",
-         "Load the raw video game sales CSV (16,719 records)."),
-        ("Explore the data",
-         "Inspect shape, data types, duplicates, missing values, and distributions."),
-        ("Clean the dataset",
-         "Remove duplicates and rows with a missing target, and keep rows with "
-         "at most 2 missing key categorical fields (Rating, Publisher, Developer)."),
-        ("Exploratory data analysis",
-         "Visualize sales by genre, platform, publisher, and year; confirm the "
-         "skewed target distribution."),
-        ("Feature engineering",
-         "Add Game_Age, review-score features, Is_Major_Publisher, and Platform_Group."),
-        ("Preprocessing",
-         "Split 80/20 (random_state=42), impute grouped by Genre + Game_Age, and "
-         "one-hot encode categoricals into 427 features."),
-        ("Train and compare models",
-         "Benchmark Linear Regression, Decision Tree, Random Forest, and XGBoost."),
-        ("Tune XGBoost",
-         "RandomizedSearchCV (30 iterations, 5-fold CV) optimized on RMSE."),
-        ("Evaluate",
-         "Tuned XGBoost scored MAE 0.41, RMSE 1.63, and R² 0.37 on the held-out test set."),
-        ("Save artifacts",
-         "Save the cleaned dataset, the tuned model, and the processed test features/target."),
-        ("Build the Streamlit app",
-         "Interactive dashboard with Dataset, Model Performance, and Predictions pages."),
-    ]
-
-    for index, (title, description) in enumerate(workflow_steps, start=1):
-        st.markdown(f"**{index}. {title}**")
-        st.write(description)
-
-# ---------------------------------------------------------
-# Dashboard
-# ---------------------------------------------------------
-elif page == "Dashboard":
+#dashboard
+if page == "Dashboard":
     st.header("Project Dashboard")
     st.write(
         "This application presents the video game sales dataset and the performance "
@@ -178,9 +126,7 @@ elif page == "Dashboard":
     st.subheader("Dataset Preview")
     st.dataframe(df.head(10), use_container_width=True)
 
-# ---------------------------------------------------------
-# Dataset
-# ---------------------------------------------------------
+#dataset
 elif page == "Dataset":
     st.header("Cleaned Dataset")
     st.write(f"Rows: **{len(df):,}** | Columns: **{len(df.columns):,}**")
@@ -204,9 +150,7 @@ elif page == "Dataset":
         mime="text/csv"
     )
 
-# ---------------------------------------------------------
-# Model Performance
-# ---------------------------------------------------------
+#model 
 elif page == "Model Performance":
     st.header("Tuned XGBoost Model Performance")
     st.caption("Metrics are calculated from the saved test set and model predictions.")
@@ -236,9 +180,7 @@ elif page == "Model Performance":
     st.pyplot(fig)
     plt.close(fig)
 
-# ---------------------------------------------------------
-# Predictions
-# ---------------------------------------------------------
+#predictions
 elif page == "Predictions":
     st.header("Test Set Predictions")
     st.write("Compare the model's predictions with the actual global sales values.")
