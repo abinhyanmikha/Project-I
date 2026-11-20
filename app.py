@@ -33,7 +33,7 @@ def load_test_target():
 
 @st.cache_resource
 def load_model():
-    return joblib.load("xgboost_model.pkl")
+    return joblib.load("best_xgboost_model.pkl")
 
 
 required_files = [
